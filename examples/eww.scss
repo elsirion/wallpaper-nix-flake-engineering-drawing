@@ -1,0 +1,8 @@
+$font: "3270 Nerd Font";
+$fg: #e6e2d6;
+$acc: #ffb000;
+* { all: unset; }
+.stats { font-family: $font; font-size: 17px; color: $fg; padding: 0 4px; }
+.row { min-height: 22px; }
+.k { color: $acc; font-size: 13px; letter-spacing: 0.08em; }
+.v { color: $fg; }

@@ -1,0 +1,35 @@
+;; Live system stats rendered into the wallpaper's title block ("SYSTEM" field).
+;; Geometry matches STATS_BOX in flake_drawing.py for a 2560x1440 output with a 26 px bar.
+(defpoll st :interval "10s" :initial '{"cpu":0,"temp":0,"load":"","memu":0,"memt":0,"gtt":0,"disk":"","up":"","vpn":"","ip":"","claude":0,"codex":0,"ff":0,"host":""}'
+  `./stats.sh`)
+
+(defwidget row [k v]
+  (box :class "row" :orientation "h" :space-evenly false
+    (label :class "k" :text k :xalign 0 :width 72)
+    (label :class "v" :text v :xalign 0)))
+
+(defwidget stats []
+  (box :class "stats" :orientation "h" :space-evenly true :spacing 24
+    (box :orientation "v" :space-evenly false :spacing 2
+      (row :k "CPU"   :v "${st.cpu}%  ${st.temp}°C  load ${st.load}")
+      (row :k "MEM"   :v "${st.memu} / ${st.memt} GiB   GTT ${st.gtt} GiB")
+      (row :k "DISK"  :v "${st.disk}")
+      (row :k "UP"    :v "${st.up}"))
+    (box :orientation "v" :space-evenly false :spacing 2
+      (row :k "NET"   :v "${st.ip}")
+      (row :k "VPN"   :v "${st.vpn}")
+      (row :k "AGENTS" :v "claude ×${st.claude}   codex ×${st.codex}")
+      (row :k "HOST"  :v "${st.host}"))))
+
+(defwindow stats-dp9
+  :monitor "DP-9" :stacking "bottom" :exclusive false :focusable false :namespace "eww-stats"
+  :geometry (geometry :anchor "bottom right" :x "60px" :y "56px" :width "620px" :height "102px")
+  (stats))
+(defwindow stats-dp11
+  :monitor "DP-11" :stacking "bottom" :exclusive false :focusable false :namespace "eww-stats"
+  :geometry (geometry :anchor "bottom right" :x "60px" :y "56px" :width "620px" :height "102px")
+  (stats))
+(defwindow stats-edp
+  :monitor "eDP-1" :stacking "bottom" :exclusive false :focusable false :namespace "eww-stats"
+  :geometry (geometry :anchor "bottom right" :x "60px" :y "56px" :width "620px" :height "102px")
+  (stats))
