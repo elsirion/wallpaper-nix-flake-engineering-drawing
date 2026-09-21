@@ -68,5 +68,7 @@ conky ≥ 1.19 for example with `own_window_type = 'desktop'`.
 
 ## Licence
 
-Snowflake geometry: NixOS logo, CC-BY 4.0, NixOS contributors.
-Everything else: MIT.
+Code and sheet design: MIT, see [LICENSE](LICENSE).
+The snowflake geometry is derived from the NixOS logo, © NixOS contributors,
+[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). Rendered wallpapers are
+derivative works of the logo, so keep the attribution if you redistribute them.
