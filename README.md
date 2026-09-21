@@ -11,15 +11,8 @@ so every dimension on the sheet is the real one: six lambdas on a Ø501.4 tip ci
 apexes on Ø195.6, foot flats at 217.2 from centre (exactly R·√3/2), 60° pitch.
 Units are the artwork's own pixels.
 
-## Sheets
-
-**minimal** (above): the flake centred with five dimensions and a title block whose
-lower field is left empty for live system stats. The bottom 26 px are kept clear for a bar.
-
-**full**: front view 1.5:1, detail A of a foot, view B of one lambda, notes, a parts
-list reading `flake.nix` as a bill of materials, and a complete title block.
-
-![full sheet, amber](docs/full-amber.png)
+The flake is centred with five dimensions and a title block whose lower field is left
+empty for live system stats. The bottom 26 px are kept clear for a bar.
 
 | blueprint | vandyke |
 |---|---|
@@ -29,7 +22,7 @@ list reading `flake.nix` as a bill of materials, and a complete title block.
 
     ./render.sh            # every scheme and size into out/
     python3 flake_drawing.py amber > amber.svg
-    python3 flake_drawing.py blueprint --minimal --size=2057x1371 > laptop.svg
+    python3 flake_drawing.py blueprint --size=2057x1371 > laptop.svg
 
 Schemes: `amber`, `vandyke`, `blueprint`. Add one to `SCHEMES` in the script.
 `--size=WxH` renders the sheet for an output's logical size; the title block is placed
