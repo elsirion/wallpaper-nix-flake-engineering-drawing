@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Nix snowflake as an engineering drawing. Geometry from nixos-artwork/logo/nix-snowflake-white.svg."""
-import math, sys
+import json, math, sys
 
 # One lambda (pointing up), centre-origin, y down, artwork px units.
 L = [(98.0,-5.4),(-24.2,-217.0),(32.0,-217.5),(64.6,-160.6),(97.4,-217.2),(125.3,-217.2),(139.6,-192.5),(92.8,-112.0),(126.0,-54.2)]
@@ -74,10 +74,11 @@ def arc(cx, cy, r, a1, a2, C, w=1.2, marker=ARROWS):
 # ---------------------------------------------------------------------------
 # The sheet: flake centred, a few dimensions, thin bottom band. The title
 # block's lower area is left empty on purpose: an eww widget draws live system
-# stats there (see STATS_BOX for the rectangle it must cover).
+# stats there (see stats_box() for the rectangle it must cover).
 # ---------------------------------------------------------------------------
 BAR = 26          # waybar height at the bottom, kept clear
-def stats_box(): return (W - 680, H - BAR - 204, W - 48, H - BAR - 74)   # x0, y0, x1, y1 of the live-stats area
+# x0, y0, x1, y1 of the live-stats field: under the SYSTEM label, 8 px clear of it and of the frame
+def stats_box(): return (W - 680, H - BAR - 158, W - 60, H - BAR - 56)
 
 def build_minimal(scheme):
     global W, H
@@ -151,5 +152,8 @@ if __name__ == '__main__':
     for a in sys.argv[1:]:
         if a.startswith('--size='):
             W, H = (int(x) for x in a[7:].split('x'))
+    if '--field' in sys.argv[1:]:   # sidecar for widgets: sheet size and stats field, in sheet units
+        sys.stdout.write(json.dumps({'size': [W, H], 'field': list(stats_box())}) + '\n')
+        sys.exit()
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     sys.stdout.write(build_minimal(args[0] if args else 'amber'))

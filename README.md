@@ -49,14 +49,18 @@ With [eww](https://github.com/elkowar/eww) on sway that is a window with
     (label :xalign 0 :text "VPN  ${st.vpn}   UP  ${st.up}")))
 ```
 
-The offsets come from `stats_box()` in the script: the field is 632 × 130 px, its right
-edge 48 px from the screen edge and its bottom 74 px above the bar line (26 px bar).
-`x 60 / y 56` with a 620 × 102 window lands inside it with a small margin.
+The offsets come from `stats_box()` in the script: the field under the SYSTEM label is
+620 × 102 px, its right edge 60 px from the screen edge and its bottom 56 px above the bar
+line (26 px bar). That holds when the sheet is drawn at the output's logical size. For
+anything else, `python3 flake_drawing.py --field [--size=WxH]` prints the sheet size and the
+field as JSON; `render.sh` writes it next to each PNG as `*.field.json`.
 `examples/` holds the complete eww config used with this wallpaper: `stats.sh`
 gathers CPU, temperature, memory (including amdgpu GTT), disk, uptime, VPN relay,
-LAN address and agent counts; `eww.yuck` defines one window per monitor;
-`eww.scss` sets the font and the amber colours. Start it from sway with
-`exec_always eww open stats`. Any other layer-shell tool works the same way,
+LAN address and agent counts; `eww.yuck` defines one window that takes its geometry and a
+content scale as arguments; `eww.scss` sets the font and the amber colours; `start.sh` opens
+the window on every active output, mapping the wallpaper's `*.field.json` through swaybg's
+`fill` scaling and cropping, and reopens it on hotplug. Start it from sway with
+`exec_always ~/.config/eww/start.sh`. Any other layer-shell tool works the same way,
 conky ≥ 1.19 for example with `own_window_type = 'desktop'`.
 
 ## Licence
